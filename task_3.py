@@ -6,8 +6,8 @@ a = 0
 def function(arg, lock):
     global a
     with lock:
-	    for _ in range(arg):
-	        a += 1
+        for _ in range(arg):
+            a += 1
 
 
 def main():
