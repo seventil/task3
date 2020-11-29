@@ -1,14 +1,15 @@
 import concurrent.futures
+import itertools
         
 
 class MockOperation():
     
     def __init__(self):
-        self.a = 0
+        self.a = itertools.count()
         
     def function(self, arg):        
         for i in range(arg):                
-            self.a += 1
+            next(self.a)
             
     def value(self):
         return self.a
