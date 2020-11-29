@@ -1,25 +1,25 @@
-from threading import Thread, Lock
+from threading import Thread
+        
 
-a = 0
+class MockOperation():
+    def __init__(self):
+        self.a = 0
+    def function(self, arg):        
+        for i in range(arg):                
+            self.a += 1
+                
+mock_object = MockOperation()
 
 
-def function(arg, lock):
-    global a
-    with lock:
-        for _ in range(arg):
-            a += 1
-
-
-def main():
-    lock = Lock()
+def main():    
     threads = []
     for i in range(5):
-        thread = Thread(target=function, args=(1000000, lock))
+        thread = Thread(target=mock_object.function, args=(100000,))
         thread.start()
         threads.append(thread)
 
     [t.join() for t in threads]
-    print("----------------------", a)  # ???
+    print("----------------------", mock_object.a)  # ???
 
 
 main()
