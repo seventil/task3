@@ -1,27 +1,32 @@
 import concurrent.futures
 import itertools
-        
+import queue
+
 
 class MockOperation():
-    
+
     def __init__(self):
         self.a = itertools.count()
-        
-    def function(self, arg):        
-        for i in range(arg):                
-            next(self.a)
-            
+
+    def function(self):
+        next(self.a)
+
+
     def value(self):
         return self.a
-                
-mock_object = MockOperation()
 
 
-def main():    
+def main():
+    mock_object = MockOperation()
+    q = queue.Queue()
+
+    for _ in range(6):
+        q.put(mock_object.function)
+
     with concurrent.futures.ThreadPoolExecutor() as executor:
         for _ in range(5):
-            executor.submit(mock_object.function, 1000000)
-   
+            executor.submit(q.get())
+
     print("----------------------", mock_object.value())
 
 
