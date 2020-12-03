@@ -25,8 +25,8 @@ def scheduler(q: queue.Queue, function_to_schedule, arg=None):
 
 def worker(q: queue.Queue):
     while True:
-        a = q.get()
-        a()
+        function_to_execute = q.get()
+        function_to_execute()
         q.task_done()
 
 
